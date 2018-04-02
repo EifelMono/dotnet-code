@@ -1,21 +1,21 @@
-var target = Argument ("target", "Default");
-var uninstallBeforeInstall = Argument<bool> ("uninstallBeforeInstall", true);
+string target = Argument<string> ("target", "Default");
+bool uninstallBeforeInstall = Argument<bool> ("uninstallBeforeInstall", true);
 
 // dotnet tools defaults
-var isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform (System.Runtime.InteropServices.OSPlatform.Windows);
-
 string userDirectory = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
 string dotnetDirectory = System.IO.Path.Combine (userDirectory, ".dotnet");
 string dotnetToolsDirectory = System.IO.Path.Combine (dotnetDirectory, "tools");
 string dotnetToolsPkgsDirectory = System.IO.Path.Combine (dotnetDirectory, "toolspkgs");
 
-string nuGetOrg = "https://api.nuget.org/v3/index.json";
+bool isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform (System.Runtime.InteropServices.OSPlatform.Windows);
 
-// Directory of the package output!!
-string nupkgDirectory = "nupkg";
+string nuGetOrg = "https://api.nuget.org/v3/index.json";
 
 // Name of the csproj 
 string csprojName;
+
+// Directory of the package output!!
+string nupkgDirectory = "nupkg";
 
 void DotNetRun (string argument) {
     var exitCode = StartProcess ("dotnet", new ProcessSettings {
@@ -25,6 +25,7 @@ void DotNetRun (string argument) {
         throw new Exception ($"Error {exitCode} during cmd={argument}");
 }
 
+// pre Tasks 
 Setup (ctx => {
     var csproj = System.IO.Directory.GetFiles (".", "*.csproj").FirstOrDefault ();
     if (string.IsNullOrEmpty (csproj))
@@ -32,6 +33,9 @@ Setup (ctx => {
     csprojName = System.IO.Path.GetFileNameWithoutExtension (csproj);
 });
 
+Teardown (ctx => { });
+
+// Tasks
 Task ("Restore")
     .Does (() => {
         DotNetRun ("restore");
@@ -49,12 +53,15 @@ Task ("Build")
     });
 
 Task ("UnInstall")
-    .Description ("Removes an installed command from the 'user home' .dotnet/tools and .dotnet/toolspks folder")
+    .Description ("Removes an installed tool from the 'user home' .dotnet/tools and .dotnet/toolspks folder")
     .Does (() => {
-        var extension = isWindows? ".exe": "";
         if (DirectoryExists (dotnetToolsDirectory)) {
-            foreach (var file in System.IO.Directory.GetFiles (dotnetToolsDirectory, $"{csprojName}{extension}"))
-                DeleteFile (file);
+            var extensions = isWindows ? new string[] { ".exe", ".config" } : new string[] { "" };
+            foreach (var extension in extensions) {
+                var filename = System.IO.Path.Combine (dotnetToolsDirectory, csprojName) + extension;
+                if (System.IO.File.Exists (filename))
+                    System.IO.File.Delete (filename);
+            }
         }
         if (DirectoryExists (dotnetToolsPkgsDirectory)) {
             var dotnetToolPkgsDirectory = System.IO.Path.Combine (dotnetToolsPkgsDirectory, csprojName);

@@ -14,11 +14,31 @@ namespace DotNetCode {
                 Console.WriteLine (Help);
                 return;
             }
+            var isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform (System.Runtime.InteropServices.OSPlatform.Windows);
             var workspace = Directory.GetFiles (Directory.GetCurrentDirectory (), "*.code-workspace").FirstOrDefault ();
-            if (string.IsNullOrEmpty (workspace))
-                Process.Start ("code", $"{Directory.GetCurrentDirectory()}");
-            else
-                Process.Start ("code", $"{workspace}");
+
+            ProcessStartInfo psi = new ProcessStartInfo ();
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+
+            if (string.IsNullOrEmpty (workspace)) {
+                if (isWindows) {
+                    var p = new Process ();
+                    p.StartInfo = psi;
+                    p = Process.Start ("cmd", $"/C code {Directory.GetCurrentDirectory()}");
+                } else
+                    Process.Start ("code", $"{Directory.GetCurrentDirectory()}");
+            } else {
+                if (isWindows) {
+                    var p = new Process ();
+                    p.StartInfo = psi;
+                    p = Process.Start ("cmd", $"/C code {workspace}");
+                } else
+                    Process.Start ("code", $"{workspace}");
+            }
         }
     }
 }
