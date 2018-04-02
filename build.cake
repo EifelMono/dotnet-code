@@ -1,11 +1,21 @@
 var target = Argument ("target", "Default");
 var uninstallBeforeInstall = Argument<bool> ("uninstallBeforeInstall", true);
 
-// Name of the csproj 
-string csprojName;
+// dotnet tools defaults
+var isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform (System.Runtime.InteropServices.OSPlatform.Windows);
+
+string userDirectory = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
+string dotnetDirectory = System.IO.Path.Combine (userDirectory, ".dotnet");
+string dotnetToolsDirectory = System.IO.Path.Combine (dotnetDirectory, "tools");
+string dotnetToolsPkgsDirectory = System.IO.Path.Combine (dotnetDirectory, "toolspkgs");
+
+string nuGetOrg = "https://api.nuget.org/v3/index.json";
 
 // Directory of the package output!!
 string nupkgDirectory = "nupkg";
+
+// Name of the csproj 
+string csprojName;
 
 void DotNetRun (string argument) {
     var exitCode = StartProcess ("dotnet", new ProcessSettings {
@@ -33,14 +43,26 @@ Task ("Pack")
         DotNetRun ($"pack -c release -o {nupkgDirectory}");
     });
 
-Task ("UnInstall")
-    .Description ("Removes an installed command from the 'user home'/.dotnet/tools folder")
+Task ("Build")
     .Does (() => {
-        var userDirectory = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
-        var dotnetTools = System.IO.Path.Combine (userDirectory, ".dotnet", "tools");
-        if (DirectoryExists (dotnetTools)) {
-            foreach (var file in System.IO.Directory.GetFiles (dotnetTools, $"{csprojName}*"))
+        DotNetRun ($"build");
+    });
+
+Task ("UnInstall")
+    .Description ("Removes an installed command from the 'user home' .dotnet/tools and .dotnet/toolspks folder")
+    .Does (() => {
+        var extension = isWindows? ".exe": "";
+        if (DirectoryExists (dotnetToolsDirectory)) {
+            foreach (var file in System.IO.Directory.GetFiles (dotnetToolsDirectory, $"{csprojName}{extension}"))
                 DeleteFile (file);
+        }
+        if (DirectoryExists (dotnetToolsPkgsDirectory)) {
+            var dotnetToolPkgsDirectory = System.IO.Path.Combine (dotnetToolsPkgsDirectory, csprojName);
+            if (DirectoryExists (dotnetToolPkgsDirectory))
+                DeleteDirectory (dotnetToolPkgsDirectory, new DeleteDirectorySettings {
+                    Force = true,
+                        Recursive = true
+                });
         }
     });
 
@@ -68,9 +90,9 @@ Task ("PushToNuGetOrg")
         var nugetNupkgFile = System.IO.Directory.GetFiles (nupkgDirectory, "*.nupkg").FirstOrDefault ();
         if (string.IsNullOrEmpty (nugetNupkgFile))
             throw new Exception ($"No nuget file found in this folder {nupkgDirectory}");
-        Information(nugetNupkgFile);
+        Information (nugetNupkgFile);
         var exitCode = StartProcess ("nuget", new ProcessSettings {
-            Arguments = $"push {nugetNupkgFile} -Source https://api.nuget.org/v3/index.json"
+            Arguments = $"push {nugetNupkgFile} -Source {nuGetOrg}"
         });
     });
 
