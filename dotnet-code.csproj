@@ -1,9 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-     <PackAsTool>true</PackAsTool>
-  </PropertyGroup>
+    <Version>1.0.2</Version>
+    <PackAsTool>true</PackAsTool>
+    <Title>dotnet-code</Title>
+    <Authors>eifelmono@klapperich.de</Authors>
+    <Product>dotnet-code</Product>
+    <Copyright>Use it or lose it!</Copyright>
+    <Owners>eifelmono</Owners>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Description>dotnet-code starts Visual Studio Code in the current folder. 
+If there is a code-workspace file in the folder, dotnet-code starts code with this, 
+otherwise with the current folder as parameter.
 
+It only works with 2.1.300-preview1 .NET Core SDK or newer
+
+dotnet install tool -global dotnet-code
+    </Description>
+    <ProjectUrl>https://github.com/EifelMono/dotnet-code</ProjectUrl>
+    <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/eifelmono/dotnet-code</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/eifelmono/dotnet-code.git</RepositoryUrl>
+    <PackageReleaseNotes>See $(PackageProjectUrl)/blob/master/README.md</PackageReleaseNotes>
+    <LangVersion>Latest</LangVersion>
+  </PropertyGroup>
 </Project>

@@ -1,4 +1,5 @@
 var target = Argument ("target", "Default");
+var uninstallBeforeInstall = Argument<bool> ("uninstallBeforeInstall", true);
 
 // Name of the csproj 
 string csprojName;
@@ -33,6 +34,7 @@ Task ("Pack")
     });
 
 Task ("UnInstall")
+    .Description ("Removes an installed command from the 'user home'/.dotnet/tools folder")
     .Does (() => {
         var userDirectory = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
         var dotnetTools = System.IO.Path.Combine (userDirectory, ".dotnet", "tools");
@@ -42,21 +44,35 @@ Task ("UnInstall")
         }
     });
 
-Task ("InstallFromNuGetLocal")
+Task ("UninstallBeforeInstall")
     // If you install again you need to remove the old one by hand
-    // 2.1.300 Preview....
+    // at this time needed for 2.1.300 Preview....
+    .WithCriteria (uninstallBeforeInstall)
     .IsDependentOn ("UnInstall")
+    .Does (() => { });
+
+Task ("InstallFromNuGetLocal")
+    .IsDependentOn ("UninstallBeforeInstall")
     .Does (() => {
         DotNetRun ($"install tool -g {csprojName} --source {nupkgDirectory} ");
     });
 
 Task ("InstallFromNuGetOrg")
+    .IsDependentOn ("UninstallBeforeInstall")
     .Does (() => {
         DotNetRun ($"install tool -g {csprojName}");
     });
 
 Task ("PushToNuGetOrg")
-    .Does (() => { });
+    .Does (() => {
+        var nugetNupkgFile = System.IO.Directory.GetFiles (nupkgDirectory, "*.nupkg").FirstOrDefault ();
+        if (string.IsNullOrEmpty (nugetNupkgFile))
+            throw new Exception ($"No nuget file found in this folder {nupkgDirectory}");
+        Information(nugetNupkgFile);
+        var exitCode = StartProcess ("nuget", new ProcessSettings {
+            Arguments = $"push {nugetNupkgFile} -Source https://api.nuget.org/v3/index.json"
+        });
+    });
 
 Task ("Default")
     .IsDependentOn ("Restore")
