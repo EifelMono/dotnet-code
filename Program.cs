@@ -24,20 +24,25 @@ namespace DotNetCode {
             psi.UseShellExecute = false;
             psi.CreateNoWindow = true;
 
-            if (string.IsNullOrEmpty (workspace)) {
-                if (isWindows) {
-                    var p = new Process ();
-                    p.StartInfo = psi;
-                    p = Process.Start ("cmd", $"/C code {Directory.GetCurrentDirectory()}");
-                } else
-                    Process.Start ("code", $"{Directory.GetCurrentDirectory()}");
-            } else {
-                if (isWindows) {
-                    var p = new Process ();
-                    p.StartInfo = psi;
-                    p = Process.Start ("cmd", $"/C code {workspace}");
-                } else
-                    Process.Start ("code", $"{workspace}");
+            try {
+                if (string.IsNullOrEmpty (workspace)) {
+                    if (isWindows) {
+                        var p = new Process ();
+                        p.StartInfo = psi;
+                        p = Process.Start ("cmd", $"/C code {Directory.GetCurrentDirectory()}");
+                    } else
+                        Process.Start ("code", $"{Directory.GetCurrentDirectory()}");
+                } else {
+                    if (isWindows) {
+                        var p = new Process ();
+                        p.StartInfo = psi;
+                        p = Process.Start ("cmd", $"/C code {workspace}");
+                    } else
+                        Process.Start ("code", $"{workspace}");
+                }
+            } catch (Exception ex) {
+                Console.WriteLine ("Can no start Visual Studio Code");
+                Console.WriteLine (ex);
             }
         }
     }

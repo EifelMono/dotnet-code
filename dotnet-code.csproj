@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <PackAsTool>true</PackAsTool>
     <Title>dotnet-code</Title>
     <Authors>eifelmono@klapperich.de</Authors>
@@ -17,7 +17,7 @@ otherwise with the current folder as parameter.
 
 It only works with 2.1.300-preview1 .NET Core SDK or newer
 
-dotnet install tool -global dotnet-code
+dotnet install tool -g dotnet-code
     </Description>
     <ProjectUrl>https://github.com/EifelMono/dotnet-code</ProjectUrl>
     <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
