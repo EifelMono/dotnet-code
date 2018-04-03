@@ -1,7 +1,7 @@
 ﻿
 # dotnet-code
 
-[![NuGet][main-nuget-badge]][main-nuget] [![MyGet][main-myget-badge]][main-myget]
+[![NuGet][main-nuget-badge]][main-nuget]
 
 [main-nuget]: https://www.nuget.org/packages/dotnet-code/
 [main-nuget-badge]: https://img.shields.io/nuget/v/dotnet-code.svg?style=flat-square&label=nuget
