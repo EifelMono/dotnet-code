@@ -5,7 +5,7 @@ bool uninstallBeforeInstall = Argument<bool> ("uninstallBeforeInstall", true);
 string userDirectory = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
 string dotnetDirectory = System.IO.Path.Combine (userDirectory, ".dotnet");
 string dotnetToolsDirectory = System.IO.Path.Combine (dotnetDirectory, "tools");
-string dotnetToolsPkgsDirectory = System.IO.Path.Combine (dotnetDirectory, "toolspkgs");
+string dotnetToolsStoreDirectory = System.IO.Path.Combine (dotnetToolsDirectory, ".store");
 
 bool isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform (System.Runtime.InteropServices.OSPlatform.Windows);
 
@@ -56,19 +56,19 @@ Task ("UnInstall")
     .Description ("Removes an installed tool from the 'user home' .dotnet/tools and .dotnet/toolspks folder")
     .Does (() => {
         if (DirectoryExists (dotnetToolsDirectory)) {
-            var extensions = isWindows ? new string[] { ".exe", ".config" } : new string[] { "" };
+            var extensions = isWindows ? new string[] { ".exe", ".config", ".json" } : new string[] { "", ".startupconfig.json" };
             foreach (var extension in extensions) {
                 var filename = System.IO.Path.Combine (dotnetToolsDirectory, csprojName) + extension;
                 if (System.IO.File.Exists (filename))
                     System.IO.File.Delete (filename);
             }
         }
-        if (DirectoryExists (dotnetToolsPkgsDirectory)) {
-            var dotnetToolPkgsDirectory = System.IO.Path.Combine (dotnetToolsPkgsDirectory, csprojName);
+        if (DirectoryExists (dotnetToolsStoreDirectory)) {
+            var dotnetToolPkgsDirectory = System.IO.Path.Combine (dotnetToolsStoreDirectory, csprojName);
             if (DirectoryExists (dotnetToolPkgsDirectory))
                 DeleteDirectory (dotnetToolPkgsDirectory, new DeleteDirectorySettings {
                     Force = true,
-                        Recursive = true
+                    Recursive = true
                 });
         }
     });
@@ -83,13 +83,13 @@ Task ("UninstallBeforeInstall")
 Task ("InstallFromNuGetLocal")
     .IsDependentOn ("UninstallBeforeInstall")
     .Does (() => {
-        DotNetRun ($"install tool -g {csprojName} --source {nupkgDirectory} ");
+        DotNetRun ($"tool install {csprojName} --source-feed {MakeAbsolute(Directory($"./{nupkgDirectory}"))} -g");
     });
 
 Task ("InstallFromNuGetOrg")
     .IsDependentOn ("UninstallBeforeInstall")
     .Does (() => {
-        DotNetRun ($"install tool -g {csprojName}");
+        DotNetRun ($"tool install {csprojName} -g");
     });
 
 Task ("PushToNuGetOrg")

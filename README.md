@@ -14,12 +14,12 @@ On Windows you can insert dotnet-code also in the address line.
 
 ## Install
 ```
-dotnet install tool -g dotnet-code
+dotnet tool install dotnet-code -g
 ```
 
 ## Requirements
 
-[2.1.300-preview1](https://www.microsoft.com/net/download/dotnet-core/sdk-2.1.300-preview1) .NET Core SDK or newer
+[2.1.300-preview2](https://www.microsoft.com/net/download/dotnet-core/sdk-2.1.300-preview2) .NET Core SDK or newer
 Section "Global Tools"
 
 How to check the installed dotnet version
@@ -32,7 +32,7 @@ dotnet --version
 ### from NuGet.org
 
 ```
-dotnet install tool -g dotnet-code
+dotnet tool install dotnet-code -g
 ```
 This downloads dotnet-code from NuGet.org
 
@@ -58,8 +58,17 @@ Then goto the folder .dotnet/tools
 ```
 cd .dotnet/tools
 ```
+Here you find the program starter which you can delete.
 
-Here you find the program and you can delete it.
+```
+cd .dotnet/tools/.storage
+```
+Here you find the real program which you can delete.
+
+Or use the dotnet uninstall programm
+```
+dotnet tool uninstall dotnet-code -g
+```
 
 Or use the cakebuild batch file build.sh or build.ps1 with the target uninstall
 ```

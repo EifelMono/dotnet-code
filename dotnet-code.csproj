@@ -2,8 +2,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
+    <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>
+  </PropertyGroup>
+  <PropertyGroup>
     <Title>dotnet-code</Title>
     <Authors>eifelmono@klapperich.de</Authors>
     <Product>dotnet-code</Product>
@@ -15,9 +18,12 @@
 If there is a code-workspace file in the folder, dotnet-code starts code with this, 
 otherwise with the current folder as parameter.
 
-It only works with 2.1.300-preview1 .NET Core SDK or newer
+It only works with 2.1.300-preview2 .NET Core SDK or newer
 
-dotnet install tool -g dotnet-code
+Install:
+dotnet tool install dotnet-code -g
+Uninstall
+dotnet tool uninstall dotnet-code -g
     </Description>
     <ProjectUrl>https://github.com/EifelMono/dotnet-code</ProjectUrl>
     <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
