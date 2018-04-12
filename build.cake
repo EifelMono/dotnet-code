@@ -53,10 +53,10 @@ Task ("Build")
     });
 
 Task ("UnInstall")
-    .Description ("Removes an installed tool from the 'user home' .dotnet/tools and .dotnet/toolspks folder")
+    .Description ("Removes an installed tool from the 'user home' .dotnet/tools and .dotnet/tools/.store folder")
     .Does (() => {
         if (DirectoryExists (dotnetToolsDirectory)) {
-            var extensions = isWindows ? new string[] { ".exe", ".config", ".json" } : new string[] { "", ".startupconfig.json" };
+            var extensions = new string[] { "", ".exe", ".exe.config", ".startupconfig.json" };
             foreach (var extension in extensions) {
                 var filename = System.IO.Path.Combine (dotnetToolsDirectory, csprojName) + extension;
                 if (System.IO.File.Exists (filename))
@@ -64,9 +64,9 @@ Task ("UnInstall")
             }
         }
         if (DirectoryExists (dotnetToolsStoreDirectory)) {
-            var dotnetToolPkgsDirectory = System.IO.Path.Combine (dotnetToolsStoreDirectory, csprojName);
-            if (DirectoryExists (dotnetToolPkgsDirectory))
-                DeleteDirectory (dotnetToolPkgsDirectory, new DeleteDirectorySettings {
+            var dotnetToolStorageDirectory = System.IO.Path.Combine (dotnetToolsStoreDirectory, csprojName);
+            if (DirectoryExists (dotnetToolStorageDirectory))
+                DeleteDirectory (dotnetToolStorageDirectory, new DeleteDirectorySettings {
                     Force = true,
                     Recursive = true
                 });

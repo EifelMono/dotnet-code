@@ -20,8 +20,11 @@ otherwise with the current folder as parameter.
 
 It only works with 2.1.300-preview2 .NET Core SDK or newer
 
-Install:
+Install
 dotnet tool install dotnet-code -g
+or Update
+dotnet tool update dotnet-code -g
+
 Uninstall
 dotnet tool uninstall dotnet-code -g
     </Description>
