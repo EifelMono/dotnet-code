@@ -9,7 +9,6 @@ namespace DotNetCode
     class Program
     {
         static bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-
         static void Main(string[] args)
         {
             if (args?.Length > 0 && (args[0] == "--help" || args[0] == "-h"))
@@ -32,19 +31,7 @@ namespace DotNetCode
             try
             {
                 if (isWindows)
-                {
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = "cmd.exe",
-                        Arguments = $"/C code {parameter}",
-
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = false,
-                    });
-                }
+                    Process.Start("cmd", $"/c code {parameter}");
                 else
                     Process.Start("code", $"{parameter}");
             }
