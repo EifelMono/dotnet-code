@@ -232,6 +232,10 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 
+# Others
+*.DS_Store
+.mfractor
+
 # cake.build
 **/tools/**
 !**/tools/packages.config
