@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>
   </PropertyGroup>
@@ -29,9 +29,9 @@ Uninstall
 dotnet tool uninstall dotnet-code -g
     </Description>
     <ProjectUrl>https://github.com/EifelMono/dotnet-code</ProjectUrl>
-    <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/EifelMono/dotnet-code/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/eifelmono/dotnet-code</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/eifelmono/dotnet-code.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/eifelmono/dotnet-code.git/</RepositoryUrl>
     <PackageReleaseNotes>See $(PackageProjectUrl)/blob/master/README.md</PackageReleaseNotes>
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
