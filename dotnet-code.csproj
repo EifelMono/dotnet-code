@@ -30,8 +30,8 @@ dotnet tool uninstall dotnet-code -g
     </Description>
     <ProjectUrl>https://github.com/EifelMono/dotnet-code</ProjectUrl>
     <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/eifelmono/dotnet-code</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/eifelmono/dotnet-code.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/eifelmono/dotnet-code/LICENSE</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/eifelmono/dotnet-code/</RepositoryUrl>
     <PackageReleaseNotes>See $(PackageProjectUrl)/blob/master/README.md</PackageReleaseNotes>
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
