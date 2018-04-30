@@ -12,6 +12,9 @@ dotnet-code starts Visual Studio Code in the current folder.
 
 On Windows you can insert dotnet-code also in the address line.
 
+## In action
+
+![dotnet-cmder in address line](https://github.com/EifelMono/dotnet-code/blob/master/media/dotnet-code.gif)
 ## Install
 ```
 dotnet tool install dotnet-code -g
