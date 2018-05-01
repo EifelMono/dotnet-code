@@ -14,9 +14,11 @@ On Windows you can insert dotnet-code also in the address line.
 
 ## In action
 
-![dotnet-code in address line](https://github.com/EifelMono/dotnet-code/blob/master/media/dotnet-code.gif)
+### dotnet-code in address line 
+![](https://github.com/EifelMono/dotnet-code/blob/master/media/dotnet-code.gif)
 
-![dotnet-code from terminal with workspace](https://github.com/EifelMono/dotnet-code/blob/master/media/dotnet-code-workspace.gif)
+### dotnet-code from terminal with workspace
+![](https://github.com/EifelMono/dotnet-code/blob/master/media/dotnet-code-workspace.gif)
 ## Install
 ```
 dotnet tool install dotnet-code -g
