@@ -1,11 +1,6 @@
 ﻿
 # dotnet-code
 
-[![AppVeyor build status][appveyor-badge]](https://ci.appveyor.com/project/natemcmaster/dotnet-serve/branch/master)
-
-[appveyor-badge]: https://img.shields.io/appveyor/ci/natemcmaster/dotnet-serve/master.svg?label=appveyor&style=flat-square
-
-
 [![AppVeyor build status][appveyor-badge]](https://ci.appveyor.com/project/EifelMono/dotnet-code/branch/master)
 [appveyor-badge]: https://img.shields.io/appveyor/ci/EifelMono/dotnet-code/master.svg?label=appveyor&style=flat-square
 
