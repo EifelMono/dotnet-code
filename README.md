@@ -5,10 +5,12 @@
 
 [appveyor-badge]: https://img.shields.io/appveyor/ci/EifelMono/dotnet-code/master.svg?label=appveyor&style=flat-square
 
+
 [![NuGet][main-nuget-badge]][main-nuget]
 
 [main-nuget]: https://www.nuget.org/packages/dotnet-code/
 [main-nuget-badge]: https://img.shields.io/nuget/v/dotnet-code.svg?style=flat-square&label=nuget
+
 
 dotnet-code starts Visual Studio Code in the current folder.
 <br>If there is a code-workspace file in the folder, dotnet-code starts code with this,
