@@ -1,6 +1,7 @@
 ﻿
 # dotnet-code
 
+[![AppVeyor build status][appveyor-badge]](https://ci.appveyor.com/project/EifelMono/dotnet-code/branch/master)
 [![NuGet][main-nuget-badge]][main-nuget]
 
 [main-nuget]: https://www.nuget.org/packages/dotnet-code/
