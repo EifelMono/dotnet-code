@@ -2,6 +2,8 @@
 # dotnet-code
 
 [![AppVeyor build status][appveyor-badge]](https://ci.appveyor.com/project/EifelMono/dotnet-code/branch/master)
+[appveyor-badge]: https://img.shields.io/appveyor/ci/natemcmaster/dotnet-serve/master.svg?label=appveyor&style=flat-square
+
 [![NuGet][main-nuget-badge]][main-nuget]
 
 [main-nuget]: https://www.nuget.org/packages/dotnet-code/
